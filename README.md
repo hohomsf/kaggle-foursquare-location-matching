@@ -1,11 +1,11 @@
-# Kaggle Location Matching Compeition
+# Kaggle Location Matching Competition
 **Competition website:** https://www.kaggle.com/competitions/foursquare-location-matching
 
 
-This is a Kaggle competion of entity resolution. The following description from the official site briefly explains the goal:
+This is a Kaggle competition of entity resolution. The following description from the official site briefly explains the goal:
 > In this competition, you’ll match POIs together. Using a dataset of over one-and-a-half million Places entries heavily altered to include noise, duplications, extraneous, or incorrect information, you'll produce an algorithm that predicts which Place entries represent the same point-of-interest. Each Place entry includes attributes like the name, street address, and coordinates. Successful submissions will identify matches with the greatest accuracy.
 
-I joined the competition just a week before the closing and the final score was approximately 0.757. The model was trained with XGBoost algorithm.
+I joined the competition just a week before the closing but I still chose this because entity resolution was a new and interesting topic for me and I was excited to learn this new skill even the competition was about to end. The final score was approximately 0.757 and the model was trained with XGBoost algorithm.
 
 ## Tech Stack Highlights
 * Handling real-world big data
@@ -23,31 +23,14 @@ I joined the competition just a week before the closing and the final score was 
 ## Motivation
 This is the first Kaggle competition I participated in. The objective was not to beat so many experienced data scientists and win a prize money, but to gain a hands-on experience on handling real-world big data. 
 
-Also, this competition is about entity resolution / deduplication / record linkage. I believe this is a very useful technique when dealing with so many records that keep coming in, and we do not know whether there are redundant data. But surprisingly this topic is not popular in Data Science courses, so I am curious about how it works and believe I can apply a lot of knowledge I have learnt.
+I have done some other machine learning projects, but surprisingly entity resolution / deduplication / record linkage is an area I never tried. I believe experience in this project will be a very useful weapon when handling big data with redundancy issue. I am curious about how it works and believe I can apply a lot of knowledge I have learnt.
 
 ## Data
-Datasets are available on the competition website.
+Datasets are available [here](https://www.kaggle.com/competitions/foursquare-location-matching/data) on the competition website.
 
 ## Workflow
-![flow](my_images/flow.png)
-
-This is a common workflow of building a classifier, but some may not be very familar with blocking so I would like to explain why it is necessary before building a model.
-
-Let's have a look at the raw data:
-![head](my_images/head.png)<br>
-The goal of this project is to find which places are actually refer to the same place in the real world and group them together.
-
-You may notice that this can only be done when we pair up the entries and compare if they are really the same entity. According to the competition host, **the POI ("point_of_interest" column) is the only feature that must be true** and can be relied on when doing this step.
-
-So we should get a table like the following:
-![pairs](my_images/pairs.png)<br>
-The "match" column can only be True when 2 places have the same POI. This is the label for the model fitting, and also the thing I want to output after predictions.
-
-The problem is that, if we pair up entries one by one, we will end up with over 600 billion pairs which are not possible to process efficiently. So we only want to pair up entries that have some kind of similarity (e.g. names) to avoid unnecessarily handling too much pairs. 
-
-This is the blocking process and we will compare the pairs after this. Yes, we do not need this process if the dataset is not big or if the computer is powerful enough to handle such a great number of pairs. But most of the time in the real world with so many complicated data, this is a useful technique. 
-
-You may also read [this](https://vintasoftware.github.io/deduplication-slides/#1/4---Indexing) for visual presentations of different blocking algorithms and how they work. 
+![flow](my_images/flow.png)<br>
+Please read the notebooks to see how I went through each step.
 
 ## Codes
 ```location-matching-eda-model-building.ipynb```<br>
@@ -79,8 +62,8 @@ I planned to further optimize my model even after the competition ends, but unfo
 
 But still, I have concluded some potential ways for improvement.
 * Transform all multilingual text to English.
-* Rethink about blocking. While RecordLinkage is a conveient for this job, it is worth trying more algorithms such as TD-IDF, NearestNeighbors and so on to see whether accuracy or efficiency can be improved.
+* Rethink about blocking. While RecordLinkage is a convenient for this job, it is worth trying more algorithms such as TD-IDF, NearestNeighbors and so on to see whether accuracy or efficiency can be improved.
 * Compare with more classifiers like Random Forest, AdaBoost, LightGBM and the like.
 * Consider utilizing GPU to accelerate the training process.
-* Try parellization with Spark DataFrame.
+* Try parallelization with Spark DataFrame.
 * Consider using clustering instead of classification.
