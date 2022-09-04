@@ -61,9 +61,12 @@ Contains custom functions used in modelling and predicting.
 I planned to further optimize my model even after the competition ends, but unfortunately due to an issue probably on Kaggle's side, it is not possible to do any submissions now.
 
 But still, I have concluded some potential ways for improvement.
-* Transform all multilingual text to English.
 * Rethink about blocking. While RecordLinkage is a convenient for this job, it is worth trying more algorithms such as TD-IDF, NearestNeighbors and so on to see whether accuracy or efficiency can be improved.
+* Transform all multilingual text to English.
 * Compare with more classifiers like Random Forest, AdaBoost, LightGBM and the like.
 * Consider utilizing GPU to accelerate the training process.
-* Try parallelization with Spark DataFrame.
+* Try parallelization with PySpark DataFrames.
 * Consider using clustering instead of classification.
+
+## References
+1. https://www.kaggle.com/code/nlztrk/public-0-861-pykakasi-radian-coordinates
